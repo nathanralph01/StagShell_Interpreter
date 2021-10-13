@@ -29,6 +29,12 @@ prop_testAddition x y = label "addition tests" $
         result = runStag expr
     in result == Num (x + y)
 
+prop_testProduct:: Int -> Int -> Property
+prop_testProduct x y = label "Multiply tests" $
+    let expr = (Times (Literal $ Num x) (Literal $ Num y))
+        result = runStag expr
+    in result == Num (x * y)
+
 prop_testBasicIdentifier :: Property
 prop_testBasicIdentifier = label "identifier error" $
   let expr = (Plus (Literal $ Num 3) (Times (Literal $ Num 3) (Literal T)))
@@ -55,5 +61,6 @@ main :: IO ()
 main = do
     quickCheck prop_testLiteralNumber
     quickCheck prop_testAddition
+    quickCheck prop_testProduct
     quickCheck prop_testBasicIdentifier
     quickCheck prop_testFunctionApplication

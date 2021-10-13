@@ -26,10 +26,12 @@ runStag e = eval Data.Map.empty e
 eval :: Env -> Expr -> Value
 eval env (Literal v) = v
 eval env (Plus a b)  = case ((eval env a), (eval env b)) of
-    (Num x, Num y) -> undefined -- todo
-    _              -> undefined -- todo
+    (Num x, Num y) -> Num (x + y) -- Numbers -> Add together
+    _              -> Error "Plus" -- Not number -> reutrn error?
     -- what other patterns are missing above?
-eval env (Times a b) = undefined
+eval env (Times a b) = case ((eval env a), (eval env b)) of
+  (Num x, Num y) -> Num (x*y) -- Numbers -> Multiply together
+  _              -> Error "Times" -- Not Num -> Return Error
 -- todo: handle Equal, Cons, First, Rest, and If
 eval env (Var name)  = case (Data.Map.lookup name env) of
     Just a  -> undefined -- "a" is of type Value 
