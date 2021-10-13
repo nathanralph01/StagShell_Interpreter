@@ -40,3 +40,4 @@ eval env (Var name)  = case (Data.Map.lookup name env) of
 eval env _           = undefined -- todo
 
 
+
