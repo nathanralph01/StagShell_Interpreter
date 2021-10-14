@@ -55,6 +55,13 @@ prop_testProduct x y = label "Multiply tests" $
         result = runStag expr
     in result == Num (x * y)
 
+prop_testEqualNum :: Int -> Int -> Property
+prop_testEqualNum x y = label "Num Equal tests" $
+    let expr = (Equal (Literal $ Num x) (Literal $ Num y))
+        result = runStag expr
+    in result == if x == y then T else F
+
+
 prop_testBasicIdentifier :: Property
 prop_testBasicIdentifier = label "identifier error" $
   let expr = (Plus (Literal $ Num 3) (Times (Literal $ Num 3) (Literal T)))
@@ -82,5 +89,7 @@ main = do
     quickCheck prop_testLiteralNumber
     quickCheck prop_testAddition
     quickCheck prop_testProduct
+    quickCheck prop_testEqualNum
+    quickCheck prop_testEqualPair
     quickCheck prop_testBasicIdentifier
     quickCheck prop_testFunctionApplication

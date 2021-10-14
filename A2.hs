@@ -52,4 +52,3 @@ eval env (Var name)  = case (Data.Map.lookup name env) of
     Nothing -> Error "Not in the scope" -- "name" is not found in "env"
 -- todo: handle Lambda and App
 eval env _           = undefined -- todo
-
