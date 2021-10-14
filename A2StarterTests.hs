@@ -14,6 +14,18 @@ import Test.QuickCheck (Property, (==>), label, quickCheck)
 import A2 (runStag, eval)
 import A2Types(Expr(..), Value(..), Env)
 import qualified Data.Map (lookup, insert, empty)
+-- Equal
+-- Test Case --
+{-|
+runStag (Equal (Literal T) (Literal F))
+F
+runStag (Equal (Literal F) (Literal F))
+T
+runStag (Equal (Literal $ Num 3) (Literal $ Num 4)) 
+F
+runStag (Equal (Plus (Literal $ Num 3) (Literal $ Num 4)) (Literal $ Num 7))
+T
+-}
 
 --Some simple tests to get you started--
 

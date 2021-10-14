@@ -33,6 +33,7 @@ eval env (Times a b) = case ((eval env a), (eval env b)) of
   (Num x, Num y) -> Num (x*y) -- Numbers -> Multiply together
   _              -> Error "Times" -- Not Num -> Return Error
 -- todo: handle Equal, Cons, First, Rest, and If
+-- Equal
 eval env (Equal a b) = case ((eval env a), (eval env b)) of 
   (T, F) -> F
   (F, T) -> F
