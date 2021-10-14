@@ -33,6 +33,7 @@ eval env (Times a b) = case ((eval env a), (eval env b)) of
   (Num x, Num y) -> Num (x*y) -- Numbers -> Multiply together
   _              -> Error "Times" -- Not Num -> Return Error
 -- todo: handle Equal, Cons, First, Rest, and If
+
 -- Equal
 eval env (Equal a b) = case ((eval env a), (eval env b)) of 
   (T, F) -> F
@@ -40,13 +41,15 @@ eval env (Equal a b) = case ((eval env a), (eval env b)) of
   (F, F) -> T
   (T, T) -> T
   (Num x, Num y) -> if x == y then T else F
-
   (Pair x1 x2, Pair y1 y2) -> if (x1 == y1 && x2 == y2) then T else F
+  -- (?) Cloresuer (?)
+  -- (?) Different Type (?)
   _              -> Error "idfk"
+
+
 eval env (Var name)  = case (Data.Map.lookup name env) of
     Just a  -> undefined -- "a" is of type Value 
     Nothing -> Error "Not in the scope" -- "name" is not found in "env"
 -- todo: handle Lambda and App
 eval env _           = undefined -- todo
-
 

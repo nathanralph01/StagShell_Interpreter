@@ -25,6 +25,14 @@ runStag (Equal (Literal $ Num 3) (Literal $ Num 4))
 F
 runStag (Equal (Plus (Literal $ Num 3) (Literal $ Num 4)) (Literal $ Num 7))
 T
+runStag (Equal (Literal (Pair T T)) (Literal (Pair F F)))
+F
+runStag (Equal (Literal (Pair T F)) (Literal (Pair T F)))
+T
+runStag (Equal (Literal (Pair (Pair T T) F)) (Literal (Pair (Pair T F) (Num 5))))
+F
+runStag (Equal (Literal (Pair (Pair T F) (Num 5))) (Literal (Pair (Pair T F) (Num 5))))
+T
 -}
 
 --Some simple tests to get you started--
