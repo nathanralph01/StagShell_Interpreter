@@ -44,8 +44,16 @@ eval env (Equal a b) = case ((eval env a), (eval env b)) of
   (Pair x1 x2, Pair y1 y2) -> if (x1 == y1 && x2 == y2) then T else F
   -- (?) Cloresuer (?)
   -- (?) Different Type (?)
-  _              -> Error "idfk"
+  _              -> Error "Equal"
 
+-- Cons
+eval env (Cons a b) = case ((eval env a), (eval env b)) of 
+  (T, F) -> Pair T F
+  (F, T) -> Pair F T
+  (F, F) -> Pair F F
+  (T, T) -> Pair T T
+  (Num x, Num y) -> Pair (Num x) (Num y)
+  _              -> Error "Cons"
 
 eval env (Var name)  = case (Data.Map.lookup name env) of
     Just a  -> undefined -- "a" is of type Value 
