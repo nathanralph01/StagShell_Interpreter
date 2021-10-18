@@ -53,6 +53,7 @@ eval env (Cons a b) = case ((eval env a), (eval env b)) of
   (F, F) -> Pair F F
   (T, T) -> Pair T T
   (Num x, Num y) -> Pair (Num x) (Num y)
+  (Pair x1 x2, Pair y1 y2) -> Pair (Pair x1 x2) (Pair y1 y2)
   _              -> Error "Cons"
 
 eval env (Var name)  = case (Data.Map.lookup name env) of
