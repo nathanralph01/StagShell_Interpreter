@@ -47,6 +47,15 @@ eval env (Cons a b) = case ((eval env a), (eval env b)) of
   (x, y)              -> Pair x y
 
 -- First
+eval env (First a) = case ((eval env a)) of
+  (Pair x y)    -> x
+  (_)           -> Error "First"
+
+-- Rest
+eval env (Rest a) = case ((eval env a)) of
+  (Pair x y)    -> y
+  (_)           -> Error "Rest"
+
 eval env (Var name)  = case (Data.Map.lookup name env) of
     Just a  -> undefined -- "a" is of type Value 
     Nothing -> Error "Not in the scope" -- "name" is not found in "env"
