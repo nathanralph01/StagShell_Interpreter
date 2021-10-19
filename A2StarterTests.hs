@@ -14,7 +14,7 @@ import Test.QuickCheck (Property, (==>), label, quickCheck)
 import A2 (runStag, eval)
 import A2Types(Expr(..), Value(..), Env)
 import qualified Data.Map (lookup, insert, empty)
--- Equal
+-- Equal --
 -- Test Case --
 {-|
 runStag (Equal (Literal T) (Literal F))
@@ -33,6 +33,13 @@ runStag (Equal (Literal (Pair (Pair T T) F)) (Literal (Pair (Pair T F) (Num 5)))
 F
 runStag (Equal (Literal (Pair (Pair T F) (Num 5))) (Literal (Pair (Pair T F) (Num 5))))
 T
+-- Cons --
+*A2> runStag (Cons (Plus(Literal $ Num 5)(Literal $ Num 10)) (Plus(Literal $ Num 5)(Literal T)))
+Error "Plus"
+*A2> runStag (Cons (Plus(Literal $ Num 5)(Literal $ Num 10)) (Plus(Literal $ Num 5)(Literal $ Num 5)))
+Pair (Num 15) (Num 10)
+
+
 -}
 
 --Some simple tests to get you started--
