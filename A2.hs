@@ -36,17 +36,21 @@ eval env (Times a b) = case ((eval env a), (eval env b)) of
 
 -- Equal
 eval env (Equal a b) = case ((eval env a), (eval env b)) of 
+  (Error x, y)        -> Error x
+  (x, Error y)        -> Error y
   (x, y)              -> if x == y then T else F
 
 -- Cons
 eval env (Cons a b) = case ((eval env a), (eval env b)) of 
+  {-|
   (T, F) -> Pair T F
   (F, T) -> Pair F T
   (F, F) -> Pair F F
   (T, T) -> Pair T T
   (Num x, Num y) -> Pair (Num x) (Num y)
   (Pair x1 x2, Pair y1 y2) -> Pair (Pair x1 x2) (Pair y1 y2)
-  _              -> Error "Cons"
+  -}
+  (x, y)            -> Pair x y
 
 eval env (Var name)  = case (Data.Map.lookup name env) of
     Just a  -> undefined -- "a" is of type Value 
