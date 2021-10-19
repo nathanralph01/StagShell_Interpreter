@@ -56,6 +56,12 @@ eval env (Rest a) = case ((eval env a)) of
   (Pair x y)    -> y
   (_)           -> Error "Rest"
 
+-- If
+eval env (If a b c) = case ((eval env a), (eval env b), (eval env c)) of
+  (Error x, _, _)     -> Error x
+  (T, y, z)           -> y
+  (_, y, z)           -> z
+
 eval env (Var name)  = case (Data.Map.lookup name env) of
     Just a  -> undefined -- "a" is of type Value 
     Nothing -> Error "Not in the scope" -- "name" is not found in "env"
