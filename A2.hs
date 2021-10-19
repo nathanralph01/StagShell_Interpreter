@@ -36,15 +36,7 @@ eval env (Times a b) = case ((eval env a), (eval env b)) of
 
 -- Equal
 eval env (Equal a b) = case ((eval env a), (eval env b)) of 
-  (T, F) -> F
-  (F, T) -> F
-  (F, F) -> T
-  (T, T) -> T
-  (Num x, Num y) -> if x == y then T else F
-  (Pair x1 x2, Pair y1 y2) -> if (x1 == y1 && x2 == y2) then T else F
-  -- (?) Cloresuer (?)
-  -- (?) Different Type (?)
-  _              -> Error "Equal"
+  (x, y)              -> if x == y then T else F
 
 -- Cons
 eval env (Cons a b) = case ((eval env a), (eval env b)) of 
