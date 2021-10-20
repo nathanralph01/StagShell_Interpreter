@@ -62,8 +62,9 @@ eval env (If a b c) = case ((eval env a), (eval env b), (eval env c)) of
   (T, y, z)           -> y
   (_, y, z)           -> z
 
+-- Variable lookup
 eval env (Var name)  = case (Data.Map.lookup name env) of
-    Just a  -> undefined -- "a" is of type Value 
+    Just a  -> a -- "a" is of type Value 
     Nothing -> Error "Not in the scope" -- "name" is not found in "env"
 -- todo: handle Lambda and App
 eval env _           = undefined -- todo
