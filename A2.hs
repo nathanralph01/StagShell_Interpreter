@@ -69,7 +69,7 @@ eval env (Var name)  = case (Data.Map.lookup name env) of
 -- todo: handle Lambda and App
 -- Function Expression
 
-eval env (Lambda (x:xs) body) = case ((x:xs), (eval env body)) of
-  _                  -> Error "Test"
+eval env (Lambda lst body) = case (lst, body) of
+  (lst, body)         -> Closure lst env body
 
 eval env _           = undefined -- todo
