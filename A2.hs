@@ -74,8 +74,11 @@ eval env (Lambda lst body) = case (lst, body) of
 
 -- Function Application
 eval env (App fnExpr argExprs) = case ((eval env fnExpr), argExprs) of
-  ((Closure params cenv body), argExprs)  -> Error "if statement"
-  (_). argsExpr)       -> Error "App"
+  ((Closure (p:ps) cenv body), (x:xs))  -> if (length (x:xs)) /= (length (p:ps))
+                                                then Error "App"
+                                              else
+                                                (eval (Data.Map.insert p (eval cenv x)) body)
+  (_, argsExpr)       -> Error "App"
 
 
 -- eval env _           = undefined -- todo
