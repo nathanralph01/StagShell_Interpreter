@@ -65,7 +65,7 @@ eval env (If a b c) = case ((eval env a), (eval env b), (eval env c)) of
 -- Variable lookup
 eval env (Var name)  = case (Data.Map.lookup name env) of
     Just a  -> a -- "a" is of type Value 
-    Nothing -> Error "Not in the scope" -- "name" is not found in "env"
+    Nothing -> Error "Var" -- "name" is not found in "env"
 -- todo: handle Lambda and App
 
 -- Function Expression
@@ -74,10 +74,12 @@ eval env (Lambda lst body) = case (lst, body) of
 
 -- Function Application
 eval env (App fnExpr argExprs) = case ((eval env fnExpr), argExprs) of
-  ((Closure (p:ps) cenv body), (x:xs))  -> if (length (x:xs)) /= (length (p:ps))
+  ((Closure [] cenv body), [])          -> (eval cenv body)
+  ((Closure (p:ps) cenv body), (x:xs))  -> if (length (p:ps)) /= (length (x:xs))
                                                 then Error "App"
                                               else
-                                                (eval (Data.Map.insert p (eval cenv x)) body)
+                                                (eval (Data.Map.insert p (eval cenv x) cenv) (App (Lambda ps body) xs))
+                                                --(Data.Map.insert p (eval cenv x) cenv)
   (_, argsExpr)       -> Error "App"
 
 
