@@ -39,6 +39,14 @@ Error "Plus"
 *A2> runStag (Cons (Plus(Literal $ Num 5)(Literal $ Num 10)) (Plus(Literal $ Num 5)(Literal $ Num 5)))
 Pair (Num 15) (Num 10)
 
+-- First --
+runStag (First (Cons (Literal $ T) (Plus (Literal $ Num 3) (Literal $ Num 4)) ))
+T
+runStag (First (Cons (Literal $ T) (Plus (Literal $ T) (Literal $ Num 4)) ))    
+Error "Plus"
+-- should it go that way?
+
+
 -- Function App
 runStag (App (Lambda ["x", "y"] (Equal (Var "x") (Var "y"))) [Literal T, Literal T]) 
 T

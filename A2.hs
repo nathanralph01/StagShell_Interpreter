@@ -25,14 +25,19 @@ runStag e = eval Data.Map.empty e
 -- | An interpreter for the StagShell language.
 eval :: Env -> Expr -> Value
 eval env (Literal v) = v
+-- Plus
 eval env (Plus a b)  = case ((eval env a), (eval env b)) of
-    (Num x, Num y) -> Num (x + y) -- Numbers -> Add together
-    _              -> Error "Plus" -- Not number -> reutrn error?
-    -- what other patterns are missing above?
+  (Error x, y)        -> Error x
+  (x, Error y)        -> Error y
+  (Num x, Num y) -> Num (x + y) -- Numbers -> Add together
+  _              -> Error "Plus" -- Not number -> reutrn error?
+  -- what other patterns are missing above?
+-- Times
 eval env (Times a b) = case ((eval env a), (eval env b)) of
+  (Error x, y)        -> Error x
+  (x, Error y)        -> Error y
   (Num x, Num y) -> Num (x*y) -- Numbers -> Multiply together
   _              -> Error "Times" -- Not Num -> Return Error
--- todo: handle Equal, Cons, First, Rest, and If
 
 -- Equal
 eval env (Equal a b) = case ((eval env a), (eval env b)) of 
@@ -48,11 +53,13 @@ eval env (Cons a b) = case ((eval env a), (eval env b)) of
 
 -- First
 eval env (First a) = case ((eval env a)) of
+  Error x       -> Error x
   (Pair x y)    -> x
   (_)           -> Error "First"
 
 -- Rest
 eval env (Rest a) = case ((eval env a)) of
+  Error x       -> Error x
   (Pair x y)    -> y
   (_)           -> Error "Rest"
 
