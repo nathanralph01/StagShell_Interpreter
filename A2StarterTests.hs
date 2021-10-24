@@ -42,10 +42,8 @@ Pair (Num 15) (Num 10)
 -- First --
 runStag (First (Cons (Literal $ T) (Plus (Literal $ Num 3) (Literal $ Num 4)) ))
 T
-runStag (First (Cons (Literal $ T) (Plus (Literal $ T) (Literal $ Num 4)) ))    
+runStag (First (Cons (Literal $ T) (Plus (Literal $ T) (Literal $ Num 4))))    
 Error "Plus"
--- should it go that way?
-
 
 -- Function App
 runStag (App (Lambda ["x", "y"] (Equal (Var "x") (Var "y"))) [Literal T, Literal T]) 
@@ -53,6 +51,9 @@ T
 runStag (App (Lambda ["x", "y"] (Equal (Var "x") (Var "y"))) [Literal T, Literal F])
 F
 
+-- if --
+runStag (If (Literal F) (Times (Literal T)(Literal $ Num 3)) (Literal $ Num 2233))                    
+Num 2233
 -}
 
 --Some simple tests to get you started--
