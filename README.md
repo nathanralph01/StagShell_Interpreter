@@ -1,4 +1,4 @@
-# csc324_a2
+# Haskell Interpreter
 In this project, we created a basic interpreter for Haskell, called StagShell.
 
 StagShell is an expression-based language with eager evaluations. The language supports unique types of values and epression grammar, which is shown in 
